@@ -14,12 +14,14 @@ import ie.cit.domain.Image;
 
 @Repository
 @Qualifier(value="ChObjectRepository")
-public interface ChObjectRepository extends CrudRepository<ChObject, Long>  {
+public interface ObjectRepository
+//extends CrudRepository<Object, Long>
+{
 
 	
-	ChObject save(ChObject ch);
-	 Iterable<ChObject> findAll();
+	Object save(Object ch);
+	 Iterable<Object> findAll();
 	 void delete(Long id);
-	 ChObject findById(Long id);
+	 Object findById(Long id);
 
 }

@@ -1,49 +1,50 @@
-/*package ie.cit.DAO;
+package ie.cit.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import ie.cit.DAO.ObjectRepository;
 import ie.cit.domain.ChObject;
-import ie.cit.domain.Image;
 
+@Service
+@Qualifier("ChObjectService")
+public class ObjectServiceImpl implements ObjectService {
 
-public class ChObjectRepositoryImpl implements ChObjectRepository
-{
+	private ObjectRepository chObjectRepo;
+	
 	private SessionFactory sessionFactory;
 
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-     
-    public void save(Object ch) {
-        Session session = this.sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        //session.persist(ch);
-        session.saveOrUpdate(ch);
-        tx.commit();
-        session.close();
-    }
 
+	@Override
+	public void save(Object ch) {
+		 Session session = this.sessionFactory.openSession();
+	        Transaction tx = session.beginTransaction();
+	       
+	        session.saveOrUpdate(ch);
+	        tx.commit();
+	        session.close();		
+	}
 
-
-	
-	//add session variable
 	@Override
 	public List<Object> findAll() {
 		Session session = this.sessionFactory.openSession();
-		
-			List<Object> objects = session.createCriteria(ChObject.class).list();;
-		
-		
-		return objects;
-		
+		List<Object> objects = session.createCriteria(Object.class).list();;
+	
+	return objects;
 	}
 
+	@Override
 	public void delete(Long id) {
 		ChObject myObject;
 		Session session = this.sessionFactory.openSession();
@@ -52,9 +53,9 @@ public class ChObjectRepositoryImpl implements ChObjectRepository
 		
 		session.flush();
 		
-		
 	}
 
+	@Override
 	public ChObject findById(Long id) {
 		Session session  = this.sessionFactory.openSession();
 		ChObject ch = null;
@@ -65,6 +66,9 @@ public class ChObjectRepositoryImpl implements ChObjectRepository
 		catch(Exception e){}
 		return ch;
 	}
+
 	
 	
-}*/
+
+
+}

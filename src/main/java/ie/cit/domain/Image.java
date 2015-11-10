@@ -132,13 +132,23 @@ public class Image {
 		return width;
 	}
 	public void setWidth(Integer width) {
-		this.width = width;
+		if(width!=null)
+		{
+			this.width = width;
+		}
+		else
+			this.width=0;
 	}
 	public Integer getHeight() {
 		return height;
 	}
 	public void setHeight(Integer height) {
-		this.height = height;
+		if(height!=null)
+		{
+			this.height = height;
+		}
+		else
+			this.height=0;
 	}
 	public Integer isIs_primary() {
 		return is_primary;

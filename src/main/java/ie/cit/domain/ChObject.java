@@ -7,10 +7,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 //
-import javax.persistence.*;
+//import javax.persistence.*;
 //import javax.persistence.Entity;
 //import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+//import org.hibernate.annotations.CascadeType;
 
 //import org.hibernate.annotations.*;
 //import org.hibernate.annotations.
@@ -28,11 +42,16 @@ public class ChObject implements Serializable{
 	
 	private long id;
 	
+	//annotations from attempting to modify the code so that the objects would be saved in a cascading manner
+	//i.e. chobject -> saves images + participations -> saves roles + participants
+	//@ElementCollection
+	//@OneToMany(mappedBy="chobj", cascade=CascadeType.ALL, orphanRemoval=true)
+	//@JoinColumn(name="chobject_id")
 	@Transient
-	private List<Participation> participants;
+	private List<Participation> participants;;
 	
-	@Transient
-	private Set<Image> imageSet;
+	/*@Transient
+	private Set<Image> imageSet;*/
 	
 	@Column
 	private Integer object_id;
@@ -51,14 +70,17 @@ public class ChObject implements Serializable{
 	@Column 
 	private String medium;
 	
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	public String getMedium() {
 		return medium;
 	}
 
 	public void setMedium(String medium) {
-		this.medium = medium;
+		if(medium!=null)
+		{
+			this.medium = medium;
+		}
+		else
+			this.medium="";
 	}
 
 	@Id
@@ -73,7 +95,7 @@ public class ChObject implements Serializable{
 
 	
 	
-	@Transient
+/*	@Transient
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinTable(
 			name="object_image",
@@ -85,28 +107,13 @@ public class ChObject implements Serializable{
 	@Transient
 	public void setImageSet(Set<Image> imageSet) {
 		this.imageSet = imageSet;
-	}
+	}*/
 
 	
 
 	@Transient
 	private List<Map<String, Image>> images;
-	
 
-	//@OneToOne
-	//private Image image;
-	//@JoinTable
-	
-	//@Column(name=)
-	
-	//, mappedBy="ChObject"
-	//@JoinTable(name="Image")
-	
-
-	//@CollectionOfElements(targetElement = Image.class)
-	//@ElementCollection
-	
-	//, targetEntity=Map.class
 	
 
 	public ChObject() {}
@@ -136,57 +143,41 @@ public class ChObject implements Serializable{
 //	}
 //	
 
-	
-	// ",\n images="+images+
-//
-//    public Long getID() {
-//        return ID;
-//    }
-//
-//    public void setID(Long ID) {
-//        this.ID = ID;
-//    }
-	
+
 	
 	public Integer getObject_id() {
 		return object_id;
 	}
 
-	/*@Override
-	public String toString() {
-		return "ChObject [id=" + id  + " object_id=" + object_id + ", title=" + title
-				+ ", date=" + date + ", creditline=" + creditline + ", description=" + description + ", gallery_text="
-				+ gallery_text + ", images=" + images + "]";
-	}
-*/
+	
 	
 	
 	public void setObject_id(Integer object_id) {
 		this.object_id = object_id;
 	}
 
-/*	@Override
-	public String toString() {
-		return "ChObject [id=" + id + ", imageSet=" + imageSet + ", object_id=" + object_id + ", title=" + title
-				+ ", date=" + date + ", creditline=" + creditline + ", description=" + description + ", gallery_text="
-				+ gallery_text + ", medium = " + medium +  ", images=" + images + "]";
-	}*/
-	
+
 	
 
 	public String getTitle() {
 		return title;
 	}
 
+	//", imageSet=" + imageSet +
 	@Override
 	public String toString() {
-		return "ChObject [id=" + id + ", participants=" + participants + ", imageSet=" + imageSet + ", object_id="
+		return "ChObject [id=" + id + ", participants=" + participants +  ", object_id="
 				+ object_id + ", title=" + title + ", date=" + date + ", creditline=" + creditline + ", description="
 				+ description + ", gallery_text=" + gallery_text + ", medium=" + medium + ", images=" + images + "]";
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		if(title!=null)
+		{
+			this.title = title;
+		}
+		else
+			this.title="";
 	}
 	
 	public String getDate() {
@@ -194,7 +185,12 @@ public class ChObject implements Serializable{
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		if(date!=null)
+		{
+			this.date = date;
+		}
+		else
+			this.date="";
 	}
 	
 	public String getCreditline() {
@@ -202,7 +198,12 @@ public class ChObject implements Serializable{
 	}
 
 	public void setCreditline(String creditline) {
-		this.creditline = creditline;
+		if(creditline!=null)
+		{
+			this.creditline = creditline;
+		}
+		else
+			this.creditline="";
 	}
 	
 	public String getDescription() {
@@ -210,7 +211,12 @@ public class ChObject implements Serializable{
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		if(description!=null)
+		{
+			this.description = description;
+		}
+		else
+			this.description="";
 	}
 	
 	public String getGallery_text() {
@@ -218,7 +224,12 @@ public class ChObject implements Serializable{
 	}
 
 	public void setGallery_text(String gallery_text) {
-		this.gallery_text = gallery_text;
+		if(gallery_text!=null)
+		{
+			this.gallery_text = gallery_text;
+		}
+		else
+			this.gallery_text="";
 	}
 
 //	public Image getImage() {

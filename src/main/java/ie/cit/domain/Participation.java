@@ -31,9 +31,10 @@ public class Participation {
 	@JoinColumn(name="role_id")
 	@JsonUnwrapped
 	private Role role;
+	
 	@Id
 	@Column
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer participation_id;
 
 	//mappedBy="person_id") (name="person_id")
@@ -43,7 +44,15 @@ public class Participation {
 	private Integer participant_id;
 	@Column
 	private Integer role_id;
-	@Column
+
+	@ManyToOne()
+	private ChObject chobj;
+	
+	
+	public void setChobj(ChObject chobj) {
+		this.chobj = chobj;
+	}
+	//@JoinColumn(name="object_id")
 	private Integer chobject_id;
 	
 	@Override
@@ -53,13 +62,14 @@ public class Participation {
 	}
 	public Participation(){}
 	
-	public Participation(Participant participant, Role role, Integer participation_id, Integer participant_id, Integer role_id) {
+	public Participation(Participant participant, Role role, Integer participation_id,Integer chobject_id, Integer participant_id, Integer role_id) {
 		super();
 		this.participant = participant;
 		this.role = role;
 		this.participation_id = participation_id;
 		this.participant_id = participant_id;
 		this.role_id = role_id;
+		this.chobject_id=chobject_id;
 	}
 	public Participant getParticipant() {
 		return participant;
